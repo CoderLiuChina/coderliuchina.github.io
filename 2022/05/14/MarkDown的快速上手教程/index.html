@@ -8,8 +8,9 @@
 <meta property="og:image" content="https://pic.imgdb.cn/item/627fc52c0947543129a70a93.png">
 <meta property="og:image" content="https://pic.imgdb.cn/item/627fc6c10947543129ad4a75.png">
 <meta property="og:image" content="https://pic.imgdb.cn/item/62805f0f0947543129f1f90a.png">
+<meta property="og:image" content="https://pic.imgdb.cn/item/6280785e094754312943d93f.png">
 <meta property="article:published_time" content="2022-05-14T14:39:12.000Z">
-<meta property="article:modified_time" content="2022-05-15T03:37:00.220Z">
+<meta property="article:modified_time" content="2022-05-15T03:56:25.176Z">
 <meta property="article:author" content="By Coderliu from Github">
 <meta property="article:tag" content="教程">
 <meta property="article:tag" content="硬核">
@@ -120,7 +121,7 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.1"><lin
         <h3 id="下划线删除线"   >
           <a href="#下划线删除线" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#下划线删除线"></a> 下划线，删除线</h3>
       
-<p>下划线在Markdown中没有特定的语法结构，<u>我们使用HTML中的“&lt;u&gt;”来表达</u></p>
+<p>下划线在Markdown中没有特定的语法结构，<u>我们使用HTML中的“&lt;u&gt;&lt;/u&gt;”标签来表达</u></p>
 <p>写作：</p>
 <figure class="highlight markdown"><div class="table-container"><table><tr><td class="code"><pre><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">u</span>&gt;</span></span>这是文本<span class="language-xml"><span class="tag">&lt;/<span class="name">u</span>&gt;</span></span></span><br></pre></td></tr></table></div></figure>
 <p>删除线可以使用两个波浪线~~表示</p>
@@ -220,7 +221,7 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.1"><lin
 <blockquote>
 <p>这东西就叫区块</p>
 </blockquote>
-<p>有的时候它也会被叫做“引用”</p>
+<p>有的时候它也会被叫做“引用”（实际上它应用面很广，不但可以引用，还可以达到诸如强调提示等等多种效果）</p>
 <p>通过在行首添加一个大于号“&gt;&quot;和一个空格来表达</p>
 <p>写法如下：</p>
 <figure class="highlight markdown"><div class="table-container"><table><tr><td class="code"><pre><span class="line"><span class="quote">&gt; 文字内容</span></span><br></pre></td></tr></table></div></figure>
@@ -308,8 +309,10 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.1"><lin
 </li>
 </ul>
 <p>可以写作：</p>
-<figure class="highlight markdown"><div class="table-container"><table><tr><td class="code"><pre><span class="line"><span class="code">```C++</span></span><br><span class="line"><span class="code">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="code">int main()</span></span><br><span class="line"><span class="code">&#123;</span></span><br><span class="line"><span class="code">   std::cout&lt;&lt;&quot;Hello,World&quot;;</span></span><br><span class="line"><span class="code">    return 0;</span></span><br><span class="line"><span class="code">&#125;</span></span><br></pre></td></tr></table></div></figure>
-<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">显示为：</span><br><span class="line"></span><br><span class="line">```C++</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    std::cout&lt;&lt;&quot;Hello,World&quot;;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+<p><img src="https://pic.imgdb.cn/item/6280785e094754312943d93f.png" alt="代码块" /></p>
+<p>（此处Markdown在渲染时出现了严重的冲突问题，不得已只能换成图片展示）</p>
+<p>显示为：</p>
+<figure class="highlight c++"><div class="table-container"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    std::cout&lt;&lt;<span class="string">&quot;Hello,World&quot;</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
 <p>可以注意到，在我的主题中代码类别可以显示在代码块上方，这样对于一些复杂内容有助于理解</p>
 
         <h3 id="表格"   >
