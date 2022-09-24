@@ -26,7 +26,7 @@
         Name = document.getElementById("UserName").value;
 
         // 匹配用户名
-        for (var i = 0; i < Member.length - 1; i++) {
+        for (var i = 0; i < Member.length; i++) {
             if (Name = Member[i].getElementsByTagName("name")[0].childNodes[0].nodeValue) {
                 rfs = (Member[i].getElementsByTagName("reinforcement")[0].childNodes[0].nodeValue);
                 star = (Member[i].getElementsByTagName("star")[0].childNodes[0].nodeValue);
