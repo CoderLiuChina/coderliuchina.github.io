@@ -37,6 +37,8 @@
                 document.getElementById("League").innerHTML = "<br>您的联赛得分：" + (lg);
                 document.getElementById("Total").innerHTML = "<br>您的总得分：" + (Number(rfs) + Number(star) + Number(lg));
                 break;
+            } else {
+                continue;
             }
             document.getElementById("Error").innerHTML = "未找到该成员，请检查昵称是否正确";
         }
