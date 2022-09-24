@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<member>
-    <name>Testman</name>
-    <reinforcement>0.98</reinforcement>
-    <star>0.8</star>
-    <league>0.75</league>
-</member>
+<root>
+    <member>
+        <name>Testman</name>
+        <reinforcement>0.98</reinforcement>
+        <star>0.8</star>
+        <league>0.75</league>
+    </member>
 
-<member>
-    <name>testMan</name>
-    <reinforcement>0.97</reinforcement>
-    <star>0.77</star>
-    <league>0.70</league>
-</member>
+    <member>
+        <name>testMan</name>
+        <reinforcement>0.97</reinforcement>
+        <star>0.77</star>
+        <league>0.70</league>
+    </member>
+</root>
