@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <root>
+<!-- 
+    填写格式：
+    <member>
+        <name>"用户名"<name>
+        <reinforcement>"捐兵得分"</reinforcement>
+        <star>"部落战得分"</star>
+        <league>"联赛得分"</league>
+    </member>
+-->
+
+<!--
+    样例：
     <member>
         <name>Testman</name>
         <reinforcement>0.98</reinforcement>
         <star>0.8</star>
         <league>0.75</league>
-    </member>
+    </member> 
+--> 
 
-    <member>
-        <name>testMan</name>
-        <reinforcement>0.97</reinforcement>
-        <star>0.77</star>
-        <league>0.70</league>
-    </member>
+
 </root>
