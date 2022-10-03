@@ -19,6 +19,11 @@
         <league>0.75</league>
     </member> 
 --> 
-
+  <member>
+    <name>Natthar</name>
+    <reinforcement></reinforcement>
+    <star></star>
+    <league></league>
+  </member>
 
 </root>
