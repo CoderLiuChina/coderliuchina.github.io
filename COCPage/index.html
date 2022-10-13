@@ -28,30 +28,28 @@
         // 匹配用户名
         for (var i = 0; i < Member.length; i++) {
             if (Name == Member[i].getElementsByTagName("name")[0].childNodes[0].nodeValue) {
+                // 获取数据
                 rfs = (Member[i].getElementsByTagName("reinforcement")[0].childNodes[0].nodeValue);
                 star = (Member[i].getElementsByTagName("star")[0].childNodes[0].nodeValue);
                 lg = (Member[i].getElementsByTagName("league")[0].childNodes[0].nodeValue);
-
+                // 输出内容
                 document.getElementById("Reinforcement").innerHTML = "您的捐兵得分：" + (rfs);
                 document.getElementById("Star").innerHTML = "<br>您的部落战得分：" + (star);
                 document.getElementById("League").innerHTML = "<br>您的联赛得分：" + (lg);
-                document.getElementById("Total").innerHTML = "<br>您的总得分：" + (Number(rfs) + Number(star) + Number(lg));
+                document.getElementById("Total").innerHTML = "<br>您的总得分：" + (Number(rfs) + Number(star) + Number(lg)*0.79);
                 break;
             } else {
                 continue;
             }
             document.getElementById("Error").innerHTML = "未找到该成员，请检查昵称是否正确";
         }
-
-
-
-
     }
 </script>
 
 <body>
     <h1>狱冥部落功勋值查询</h1>
     <p>在此处输入你的游戏昵称即可查询当月功勋值明细</p>
+    <p>每月联赛后第一个周末更新</p>    
     <input id="UserName" placeholder="请输入昵称">
     <br>
     <button id="Submit" onclick="DisplayMember()">确认</button>
@@ -61,4 +59,5 @@
     <p id="League"></p>
     <p id="Total"></p>
     <p id="Error"></p>
+    <p>算法仍在不断改进中，若有任何疑议请咨询首领</p>
 </body>
