@@ -35,7 +35,7 @@
                 // 输出内容
                 document.getElementById("Reinforcement").innerHTML = "您的捐兵得分：" + (rfs);
                 document.getElementById("Star").innerHTML = "<br>您的部落战得分：" + (star);
-                document.getElementById("League").innerHTML = "<br>您的联赛得分：" + (lg);
+                document.getElementById("League").innerHTML = "<br>您的联赛得分：" + (Number(lg)/4);
                 document.getElementById("Total").innerHTML = "<br>您的总得分：" + (Number(rfs) + Number(star) + Number(lg)*0.79);
                 break;
             } else {
