@@ -19,15 +19,15 @@
   <meta name="author" content="CoderLiu@NEU_China">
   <meta name="keywords" content="">
   
-    <meta name="description" content="前言国内很多大学校园网有IPv6流量不计费的计费规则，网络上相关教程多以购买代理服务器为主，无法做到完全的免费，所以笔者在研究了大量资料后整合成一篇指路帖，希望能帮到各位。国内大学的校园网大多属于CERNET，对Azure的访问不做管控，但是家里的网络连接Azure是很容易被管控，导致无法连接的，所以此方法只推荐在学校里用 提醒完成本教程需要有基本的搜索引擎使用能力，遇到不懂的地方多加搜索 内容简">
+    <meta name="description" content="国内很多大学校园网有IPv6流量不计费的计费规则，网络上相关教程多以购买代理服务器为主，无法做到完全的免费，所以笔者在研究了大量资料后整合成一篇指路帖，希望能帮到各位。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何利用Azure学生优惠实现IPv6校园网免费上网">
 <meta property="og:url" content="http://coderliuchina.github.io/2024/11/12/2024_11_12/index.html">
 <meta property="og:site_name" content="CoderLiu&#39;s Blog">
-<meta property="og:description" content="前言国内很多大学校园网有IPv6流量不计费的计费规则，网络上相关教程多以购买代理服务器为主，无法做到完全的免费，所以笔者在研究了大量资料后整合成一篇指路帖，希望能帮到各位。国内大学的校园网大多属于CERNET，对Azure的访问不做管控，但是家里的网络连接Azure是很容易被管控，导致无法连接的，所以此方法只推荐在学校里用 提醒完成本教程需要有基本的搜索引擎使用能力，遇到不懂的地方多加搜索 内容简">
+<meta property="og:description" content="国内很多大学校园网有IPv6流量不计费的计费规则，网络上相关教程多以购买代理服务器为主，无法做到完全的免费，所以笔者在研究了大量资料后整合成一篇指路帖，希望能帮到各位。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-11-12T03:47:34.000Z">
-<meta property="article:modified_time" content="2024-11-12T05:04:49.994Z">
+<meta property="article:modified_time" content="2024-11-23T12:33:09.281Z">
 <meta property="article:author" content="CoderLiu@NEU_China">
 <meta property="article:tag" content="教程">
 <meta property="article:tag" content="网络">
@@ -299,7 +299,7 @@
               <p id="updated-time" class="note note-info" style="">
                 
                   
-                    本文最后更新于 2024年11月12日 下午
+                    本文最后更新于 2024年11月23日 晚上
                   
                 
               </p>
@@ -307,7 +307,9 @@
             
               <div class="markdown-body">
                 
-                <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>国内很多大学校园网有IPv6流量不计费的计费规则，网络上相关教程多以购买代理服务器为主，无法做到完全的免费，所以笔者在研究了大量资料后整合成一篇指路帖，希望能帮到各位。<br>国内大学的校园网大多属于CERNET，对Azure的访问不做管控，但是家里的网络连接Azure是很容易被管控，导致无法连接的，所以此方法只推荐在学校里用</p>
+                <p>国内很多大学校园网有IPv6流量不计费的计费规则，网络上相关教程多以购买代理服务器为主，无法做到完全的免费，所以笔者在研究了大量资料后整合成一篇指路帖，希望能帮到各位。</p>
+<span id="more"></span>
+<p>国内大学的校园网大多属于CERNET，对Azure的访问不做管控，但是家里的网络连接Azure是很容易被管控，导致无法连接的，所以此方法只推荐在学校里用</p>
 <h1 id="提醒"><a href="#提醒" class="headerlink" title="提醒"></a>提醒</h1><p>完成本教程需要有基本的搜索引擎使用能力，遇到不懂的地方多加搜索</p>
 <h1 id="内容简介"><a href="#内容简介" class="headerlink" title="内容简介"></a>内容简介</h1><p>利用Microsoft Azure对大学生的优惠政策，白嫖每年100 USD的免费额度用于免费上网，初步预计这些额度大约可换算为每年1500 GB免费流量，而且另一个好处是可以兼任科学上网软件<br>本文是指路帖，整合了一些我在搭建梯子时觉得有用的教程，仅供参考</p>
 <h1 id="教程正文"><a href="#教程正文" class="headerlink" title="教程正文"></a>教程正文</h1><h2 id="一、注册Azure并申请学生订阅"><a href="#一、注册Azure并申请学生订阅" class="headerlink" title="一、注册Azure并申请学生订阅"></a>一、注册Azure并申请学生订阅</h2><p>这部分网上教程很多，此处给出一篇我使用的教程<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/629311513?utm_id=0">教程传送门</a><br>注意务必使用学校的邮箱，也就是结尾带有<code>edu.cn</code>的邮箱</p>
