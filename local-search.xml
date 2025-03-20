@@ -4,6 +4,27 @@
   
   
   <entry>
+    <title>关于74HC165的使用及一些经验</title>
+    <link href="/2025/03/20/2025-3-20/"/>
+    <url>/2025/03/20/2025-3-20/</url>
+    
+    <content type="html"><![CDATA[<p>关于并串移位寄存器74HC165的使用及一些经验</p><span id="more"></span><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近的一些项目用到了74HC165移位寄存器，此处介绍一些该器件的使用方法和使用经验</p><h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><h2 id="74HC165-移位寄存器简介"><a href="#74HC165-移位寄存器简介" class="headerlink" title="74HC165 移位寄存器简介"></a>74HC165 移位寄存器简介</h2><p>74HC165是一种串并行输入&#x2F;串行输出的8位移位寄存器，由NXP公司推出。它具有8个输入引脚和8个输出引脚，可以通过串行输入获得8位并行输出。<br>74HC165采用并行和串行两种输入方式，输入数据可以通过Q7引脚进行串行输出，并通过时钟信号控制数据的传输。</p><h2 id="74HC165-引脚说明"><a href="#74HC165-引脚说明" class="headerlink" title="74HC165 引脚说明"></a>74HC165 引脚说明</h2><p>引脚示意图如下:<br><img src="/images/2025_3_20_Blog/74HC165_Pin.png" alt="74HC165引脚示意图"><br>引脚说明:</p><table><thead><tr><th>引脚</th><th>功能</th></tr></thead><tbody><tr><td>PL#</td><td>并行输入控制（低电平有效）</td></tr><tr><td>CE#</td><td>时钟使能（低电平有效）</td></tr><tr><td>CP</td><td>时钟信号输入（上升沿触发）</td></tr><tr><td>Q7</td><td>串行输出</td></tr><tr><td>Q7#</td><td>互补串行输出</td></tr><tr><td>DS</td><td>串行输入</td></tr><tr><td>D0~D7</td><td>并行输入</td></tr><tr><td>VCC</td><td>3.3V电源输入</td></tr><tr><td>GND</td><td>接地</td></tr></tbody></table><p>控制时序图：<br><img src="/images/2025_3_20_Blog/74HC165_Timeline.png" alt="74HC165时序图"><br><strong>采样（PL 低）</strong><br>当PL为低电平时，移位寄存器处于采样状态：它读取引脚D0…D7 并存储它们。从D0到D7口输入的并行数据将被异步地读取进寄存器内，它还在Q7引脚中输出D7的值（因此Q7 &#x3D;&#x3D; D7）。<br><strong>换档（PL高电平）</strong><br>当PL为高电平时，移位寄存器处于采样状态。它保留了从输入中读取的值，并允许您通过Q7引脚一次读取一位。您可以通过脉冲CP（串行时钟）上升沿来读取下一位，依次读取D7-D0的数据。<br><strong>串行输入（级联）</strong><br>以DS串行输入为信号源，PL为高电平，每一次时钟上升沿，输出寄存器Q0~Q7的数据向高位移动一位，DS的数据替代原本Q0的数据，Q7原本的数据溢出。因此可以利用此特性作级联，将另一74HC165的串行输出口Q7与此74HC165的串行输入口DS相连。两个移位寄存器同时进行并行装载，然后同时进行串行输出。因为PL为高电平，当Q7溢出后，新的Q0信号来自于上一个移位寄存器的Q7信号。</p><h2 id="74HC165-使用经验"><a href="#74HC165-使用经验" class="headerlink" title="74HC165 使用经验"></a>74HC165 使用经验</h2><p>此器件电控编程简单，大致模板如下：</p><h3 id="读取部分"><a href="#读取部分" class="headerlink" title="读取部分"></a>读取部分</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-type">uint8_t</span> <span class="hljs-title function_">Chip74HC165_Read</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>&#123;<br>    <span class="hljs-type">uint8_t</span> data = <span class="hljs-number">0</span>; <span class="hljs-comment">// 存储读取到的数据</span><br>    HAL_GPIO_WritePin(PL_GPIO_Port, PL_Pin, GPIO_PIN_SET); <span class="hljs-comment">// 拉高PL停止并行输入</span><br>    HAL_GPIO_WritePin(CE_GPIO_Port, CE_Pin, GPIO_PIN_RESET); <span class="hljs-comment">// 拉低CE使能时钟</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">uint8_t</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">8</span>; i++)<br>    &#123;<br>        HAL_GPIO_WritePin(CP_GPIO_Port, CP_Pin, GPIO_PIN_RESET); <span class="hljs-comment">// 拉高CP时钟触发上升沿输出</span><br>        HAL_Delay(<span class="hljs-number">1</span>); <span class="hljs-comment">// 数据输出延迟约几十us，此处用1ms简要代替</span><br>        data |= (HAL_GPIO_ReadPin(Q7_GPIO_Port, Q7_Pin) &lt;&lt; i); <span class="hljs-comment">// 读取</span><br>        HAL_Delay(<span class="hljs-number">10</span>); <span class="hljs-comment">// 延时10ms模拟时钟</span><br>        HAL_GPIO_WritePin(CP_GPIO_Port, CP_Pin, GPIO_PIN_RESET); <span class="hljs-comment">// 拉低CP时钟线</span><br><br>    &#125;<br>    HAL_GPIO_WritePin(PL_GPIO_Port, PL_Pin, GPIO_PIN_RESET); <span class="hljs-comment">// 拉低PL使能并行输入</span><br>    HAL_GPIO_WritePin(CE_GPIO_Port, CE_Pin, GPIO_PIN_SET); <span class="hljs-comment">// 拉高CE关闭时钟</span><br>    <span class="hljs-keyword">return</span> data;<br>&#125;<br></code></pre></td></tr></table></figure><p>使用中遇到的问题：</p><ul><li>Q7输出数据时延迟约20~50us，读取时可适当插入部分延时过程</li><li>CP检测到上升沿时<strong>是将存储数据后移一位</strong>而非<strong>输出当前位</strong>，换句话说，CP线的第一个上升沿会让Q7输出<strong>D6的数据</strong>而非<strong>D7的数据</strong>，Q7接口永远输出当前存储数据的最后一位，每次检测到时钟上升沿时将存储数据<strong>后移一位，最高位变成0</strong></li><li>CE线可以悬空，不影响正常使用，担心干扰可以加入防干扰电路</li></ul><h1 id="结尾声明"><a href="#结尾声明" class="headerlink" title="结尾声明"></a>结尾声明</h1><p>本文属于<em><strong>东北大学盘古实验室</strong></em>，未经允许严禁转载，若有错误请指出，不胜感激。</p><p>作者 <em>plumyT@PanGu_NEU</em></p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>硬件</tag>
+      
+      <tag>PCB</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>如何在VSCode配置C/C++环境</title>
     <link href="/2024/11/24/2024-11-24/"/>
     <url>/2024/11/24/2024-11-24/</url>
