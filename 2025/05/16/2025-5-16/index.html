@@ -19,28 +19,27 @@
   <meta name="author" content="CoderLiu@NEU_China">
   <meta name="keywords" content="">
   
-    <meta name="description" content="关于并串移位寄存器74HC165的使用及一些经验">
+    <meta name="description" content="关于VL53L0X在I2C模式下多机测量速度较慢的一种解决方法与使用经验">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于74HC165的使用及一些经验">
-<meta property="og:url" content="http://coderliuchina.github.io/2025/03/20/2025-3-20/index.html">
+<meta property="og:title" content="关于VL53L0X多机测量速度较慢的一种解决方法">
+<meta property="og:url" content="http://coderliuchina.github.io/2025/05/16/2025-5-16/index.html">
 <meta property="og:site_name" content="CoderLiu&#39;s Blog">
-<meta property="og:description" content="关于并串移位寄存器74HC165的使用及一些经验">
+<meta property="og:description" content="关于VL53L0X在I2C模式下多机测量速度较慢的一种解决方法与使用经验">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://coderliuchina.github.io/images/2025_3_20_Blog/74HC165_Pin.png">
-<meta property="og:image" content="http://coderliuchina.github.io/images/2025_3_20_Blog/74HC165_Timeline.png">
-<meta property="article:published_time" content="2025-03-20T11:25:14.000Z">
-<meta property="article:modified_time" content="2025-03-20T12:10:24.765Z">
+<meta property="og:image" content="http://coderliuchina.github.io/images/2025_5_16_Blog/ST_Reply.png">
+<meta property="article:published_time" content="2025-05-16T10:52:18.000Z">
+<meta property="article:modified_time" content="2025-05-16T11:55:57.024Z">
 <meta property="article:author" content="CoderLiu@NEU_China">
 <meta property="article:tag" content="硬件">
-<meta property="article:tag" content="PCB">
+<meta property="article:tag" content="外设">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://coderliuchina.github.io/images/2025_3_20_Blog/74HC165_Pin.png">
+<meta name="twitter:image" content="http://coderliuchina.github.io/images/2025_5_16_Blog/ST_Reply.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>关于74HC165的使用及一些经验 - CoderLiu&#39;s Blog</title>
+  <title>关于VL53L0X多机测量速度较慢的一种解决方法 - CoderLiu&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -217,7 +216,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">关于74HC165的使用及一些经验</span>
+            <span id="subtitle">关于VL53L0X多机测量速度较慢的一种解决方法</span>
           
         </div>
 
@@ -228,8 +227,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-03-20 19:25" pubdate>
-          2025年3月20日 晚上
+        <time datetime="2025-05-16 18:52" pubdate>
+          2025年5月16日 晚上
         </time>
       </span>
     
@@ -240,7 +239,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          906 字
+          795 字
         
       </span>
     
@@ -251,7 +250,7 @@
         
         
         
-          8 分钟
+          7 分钟
         
       </span>
     
@@ -297,12 +296,12 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">关于74HC165的使用及一些经验</h1>
+            <h1 id="seo-header">关于VL53L0X多机测量速度较慢的一种解决方法</h1>
             
               <p id="updated-time" class="note note-info" style="">
                 
                   
-                    本文最后更新于 2025年3月20日 晚上
+                    本文最后更新于 2025年5月16日 晚上
                   
                 
               </p>
@@ -310,67 +309,30 @@
             
               <div class="markdown-body">
                 
-                <p>关于并串移位寄存器74HC165的使用及一些经验</p>
-<span id="more"></span>
+                <p>关于VL53L0X在I2C模式下多机测量速度较慢的一种解决方法与使用经验</p>
+<span id="more"></span>  
 
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近的一些项目用到了74HC165移位寄存器，此处介绍一些该器件的使用方法和使用经验</p>
-<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><h2 id="74HC165-移位寄存器简介"><a href="#74HC165-移位寄存器简介" class="headerlink" title="74HC165 移位寄存器简介"></a>74HC165 移位寄存器简介</h2><p>74HC165是一种串并行输入&#x2F;串行输出的8位移位寄存器，由NXP公司推出。它具有8个输入引脚和8个输出引脚，可以通过串行输入获得8位并行输出。<br>74HC165采用并行和串行两种输入方式，输入数据可以通过Q7引脚进行串行输出，并通过时钟信号控制数据的传输。</p>
-<h2 id="74HC165-引脚说明"><a href="#74HC165-引脚说明" class="headerlink" title="74HC165 引脚说明"></a>74HC165 引脚说明</h2><p>引脚示意图如下:<br><img src="/images/2025_3_20_Blog/74HC165_Pin.png" srcset="/img/loading.gif" lazyload alt="74HC165引脚示意图"><br>引脚说明:</p>
-<table>
-<thead>
-<tr>
-<th>引脚</th>
-<th>功能</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>PL#</td>
-<td>并行输入控制（低电平有效）</td>
-</tr>
-<tr>
-<td>CE#</td>
-<td>时钟使能（低电平有效）</td>
-</tr>
-<tr>
-<td>CP</td>
-<td>时钟信号输入（上升沿触发）</td>
-</tr>
-<tr>
-<td>Q7</td>
-<td>串行输出</td>
-</tr>
-<tr>
-<td>Q7#</td>
-<td>互补串行输出</td>
-</tr>
-<tr>
-<td>DS</td>
-<td>串行输入</td>
-</tr>
-<tr>
-<td>D0~D7</td>
-<td>并行输入</td>
-</tr>
-<tr>
-<td>VCC</td>
-<td>3.3V电源输入</td>
-</tr>
-<tr>
-<td>GND</td>
-<td>接地</td>
-</tr>
-</tbody></table>
-<p>控制时序图：<br><img src="/images/2025_3_20_Blog/74HC165_Timeline.png" srcset="/img/loading.gif" lazyload alt="74HC165时序图"><br><strong>采样（PL 低）</strong><br>当PL为低电平时，移位寄存器处于采样状态：它读取引脚D0…D7 并存储它们。从D0到D7口输入的并行数据将被异步地读取进寄存器内，它还在Q7引脚中输出D7的值（因此Q7 &#x3D;&#x3D; D7）。<br><strong>换档（PL高电平）</strong><br>当PL为高电平时，移位寄存器处于采样状态。它保留了从输入中读取的值，并允许您通过Q7引脚一次读取一位。您可以通过脉冲CP（串行时钟）上升沿来读取下一位，依次读取D7-D0的数据。<br><strong>串行输入（级联）</strong><br>以DS串行输入为信号源，PL为高电平，每一次时钟上升沿，输出寄存器Q0~Q7的数据向高位移动一位，DS的数据替代原本Q0的数据，Q7原本的数据溢出。因此可以利用此特性作级联，将另一74HC165的串行输出口Q7与此74HC165的串行输入口DS相连。两个移位寄存器同时进行并行装载，然后同时进行串行输出。因为PL为高电平，当Q7溢出后，新的Q0信号来自于上一个移位寄存器的Q7信号。</p>
-<h2 id="74HC165-使用经验"><a href="#74HC165-使用经验" class="headerlink" title="74HC165 使用经验"></a>74HC165 使用经验</h2><p>此器件电控编程简单，大致模板如下：</p>
-<h3 id="读取部分"><a href="#读取部分" class="headerlink" title="读取部分"></a>读取部分</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-type">uint8_t</span> <span class="hljs-title function_">Chip74HC165_Read</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>&#123;<br>    <span class="hljs-type">uint8_t</span> data = <span class="hljs-number">0</span>; <span class="hljs-comment">// 存储读取到的数据</span><br>    HAL_GPIO_WritePin(PL_GPIO_Port, PL_Pin, GPIO_PIN_SET); <span class="hljs-comment">// 拉高PL停止并行输入</span><br>    HAL_GPIO_WritePin(CE_GPIO_Port, CE_Pin, GPIO_PIN_RESET); <span class="hljs-comment">// 拉低CE使能时钟</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">uint8_t</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">8</span>; i++)<br>    &#123;<br>        HAL_GPIO_WritePin(CP_GPIO_Port, CP_Pin, GPIO_PIN_RESET); <span class="hljs-comment">// 拉高CP时钟触发上升沿输出</span><br>        HAL_Delay(<span class="hljs-number">1</span>); <span class="hljs-comment">// 数据输出延迟约几十us，此处用1ms简要代替</span><br>        data |= (HAL_GPIO_ReadPin(Q7_GPIO_Port, Q7_Pin) &lt;&lt; i); <span class="hljs-comment">// 读取</span><br>        HAL_Delay(<span class="hljs-number">10</span>); <span class="hljs-comment">// 延时10ms模拟时钟</span><br>        HAL_GPIO_WritePin(CP_GPIO_Port, CP_Pin, GPIO_PIN_RESET); <span class="hljs-comment">// 拉低CP时钟线</span><br><br>    &#125;<br>    HAL_GPIO_WritePin(PL_GPIO_Port, PL_Pin, GPIO_PIN_RESET); <span class="hljs-comment">// 拉低PL使能并行输入</span><br>    HAL_GPIO_WritePin(CE_GPIO_Port, CE_Pin, GPIO_PIN_SET); <span class="hljs-comment">// 拉高CE关闭时钟</span><br>    <span class="hljs-keyword">return</span> data;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近在做一个项目，需要使用VL53L0X在I2C模式下进行多机测量，但是发现测量速度较慢，查阅资料发现一种处理方法，在此记录一下</p>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><h2 id="问题定位"><a href="#问题定位" class="headerlink" title="问题定位"></a>问题定位</h2><p>ST官方给出的API（STSW-IMG005）中有一个单次测量函数，我们使用时一般直接调用这个函数进行测量，函数定义如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 来源于官方API，产品型号STSW-IMG005</span><br>VL53L0X_Error <span class="hljs-title function_">VL53L0X_PerformSingleRangingMeasurement</span><span class="hljs-params">(VL53L0X_DEV Dev, VL53L0X_RangingMeasurementData_t *pRangingMeasurementData)</span><br>&#123;<br>    VL53L0X_Error Status = VL53L0X_ERROR_NONE;<br><br>    LOG_FUNCTION_START(<span class="hljs-string">&quot;&quot;</span>);<br><br>    <span class="hljs-comment">/* This function will do a complete single ranging</span><br><span class="hljs-comment">     * Here we fix the mode! */</span><br>    Status = VL53L0X_SetDeviceMode(Dev, VL53L0X_DEVICEMODE_SINGLE_RANGING);<br><br>    <span class="hljs-keyword">if</span> (Status == VL53L0X_ERROR_NONE)<br>    &#123;<br>        Status = VL53L0X_PerformSingleMeasurement(Dev);<br>        <span class="hljs-comment">// printf(&quot;perform 1\n&quot;);</span><br>    &#125;<br><br>    <span class="hljs-keyword">if</span> (Status == VL53L0X_ERROR_NONE)<br>    &#123;<br>        Status = VL53L0X_GetRangingMeasurementData(Dev, pRangingMeasurementData);<br>        <span class="hljs-comment">// printf(&quot;perform 2\n&quot;);</span><br>    &#125;<br><br>    <span class="hljs-keyword">if</span> (Status == VL53L0X_ERROR_NONE)<br>    &#123;<br>        Status = VL53L0X_ClearInterruptMask(Dev, <span class="hljs-number">0</span>);<br>        <span class="hljs-comment">// printf(&quot;perform 3\n&quot;);</span><br>    &#125;<br><br>    <span class="hljs-comment">// printf(&quot;perform 4\n&quot;);</span><br><br>    LOG_FUNCTION_END(Status);<br>    <span class="hljs-keyword">return</span> Status;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>使用中遇到的问题：</p>
-<ul>
-<li>Q7输出数据时延迟约20~50us，读取时可适当插入部分延时过程</li>
-<li>CP检测到上升沿时<strong>是将存储数据后移一位</strong>而非<strong>输出当前位</strong>，换句话说，CP线的第一个上升沿会让Q7输出<strong>D6的数据</strong>而非<strong>D7的数据</strong>，Q7接口永远输出当前存储数据的最后一位，每次检测到时钟上升沿时将存储数据<strong>后移一位，最高位变成0</strong></li>
-<li>CE线可以悬空，不影响正常使用，担心干扰可以加入防干扰电路</li>
-</ul>
-<h1 id="结尾声明"><a href="#结尾声明" class="headerlink" title="结尾声明"></a>结尾声明</h1><p>本文属于<em><strong>东北大学盘古实验室</strong></em>，未经允许严禁转载，若有错误请指出，不胜感激。</p>
+<p>可以看到，该函数经历了启动测量——获取数据——清除中断的过程，经实际测试发现，在I2C通讯模式下，该函数测量的频率约为每秒4次。限于使用需求I2C只有一根总线，导致多机并联至总线后获取所有数据的时间很长。</p>
+<p>查阅相关手册发现VL53L0X默认模式下测量周期为33ms，远小于此速度，故考虑是否是单次测量模式的不足导致测量速度过慢</p>
+<h2 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h2><p>查询相关资料时，在ST官方论坛中发现一条官方回复：</p>
+<p><img src="/images/2025_5_16_Blog/ST_Reply.png" srcset="/img/loading.gif" lazyload alt="ST官方回复"></p>
+<p>该回复中提到了一种解决方法，即使用连续测量模式，同时给出了相关API的结构。</p>
+<p>经搜索文件发现官方API（STSW-IMG005）中并没有给出连续测量模式的API，于是参考此回复设计相关函数</p>
+<h2 id="函数设计"><a href="#函数设计" class="headerlink" title="函数设计"></a>函数设计</h2><p>回复中给出了<code>VL53L0X_PerformContinuousRangingMeasurement()</code>函数的结构，仿照单次测量的<code>VL53L0X_PerformSingleRangingMeasurement()</code>函数，得到以下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs c">VL53L0X_Error <span class="hljs-title function_">VL53L0X_PerformContinuousRangingMeasurement</span><span class="hljs-params">(VL53L0X_DEV Dev, VL53L0X_RangingMeasurementData_t *pRangingMeasurementData)</span><br>&#123;<br>    VL53L0X_Error Status = VL53L0X_ERROR_NONE;<br><br>    LOG_FUNCTION_START(<span class="hljs-string">&quot;&quot;</span>);<br><br>    <span class="hljs-comment">/* This function will do a complete continuous ranging</span><br><span class="hljs-comment">     * Here we fix the mode! */</span><br>    Status = VL53L0X_SetDeviceMode(Dev, VL53L0X_DEVICEMODE_CONTINUOUS_RANGING);<br><br>    <span class="hljs-keyword">if</span> (Status == VL53L0X_ERROR_NONE)<br>    &#123;<br>        Status = VL53L0X_PerformContinuousMeasurement(Dev);<br>        <span class="hljs-comment">// printf(&quot;perform 1\n&quot;);</span><br>    &#125;<br><br>    <span class="hljs-keyword">if</span> (Status == VL53L0X_ERROR_NONE)<br>    &#123;<br>        Status = VL53L0X_GetRangingMeasurementData(Dev, pRangingMeasurementData);<br>        <span class="hljs-comment">// printf(&quot;perform 2\n&quot;);</span><br>    &#125;<br><br>    <span class="hljs-keyword">if</span> (Status == VL53L0X_ERROR_NONE)<br>    &#123;<br>        Status = VL53L0X_ClearInterruptMask(Dev, <span class="hljs-number">0</span>);<br>        <span class="hljs-comment">// printf(&quot;perform 3\n&quot;);</span><br>    &#125;<br><br>    <span class="hljs-comment">// printf(&quot;perform 4\n&quot;);</span><br><br>    LOG_FUNCTION_END(Status);<br>    <span class="hljs-keyword">return</span> Status;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>按照官方回复的结构，我们还需要实现<code>VL53L0X_PerformContinuousMeasurement()</code>函数。参考单次测量的函数得到如下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs c">VL53L0X_Error <span class="hljs-title function_">VL53L0X_PerformContinuousMeasurement</span><span class="hljs-params">(VL53L0X_DEV Dev)</span><br>&#123;<br>    VL53L0X_Error Status = VL53L0X_ERROR_NONE;<br>    VL53L0X_DeviceModes DeviceMode;<br><br>    LOG_FUNCTION_START(<span class="hljs-string">&quot;&quot;</span>);<br><br>    <span class="hljs-comment">/* Get Current DeviceMode */</span><br>    Status = VL53L0X_GetDeviceMode(Dev, &amp;DeviceMode);<br><br>    <span class="hljs-comment">/* Start immediately to run a continuous ranging measurement in case of</span><br><span class="hljs-comment">     * continuous ranging or continuous histogram */</span><br>    <span class="hljs-keyword">if</span> (Status == VL53L0X_ERROR_NONE &amp;&amp; DeviceMode == VL53L0X_DEVICEMODE_CONTINUOUS_RANGING)<br>        Status = VL53L0X_StartMeasurement(Dev);<br><br>    <span class="hljs-keyword">if</span> (Status == VL53L0X_ERROR_NONE)<br>        Status = VL53L0X_measurement_poll_for_completion(Dev);<br><br>    <span class="hljs-comment">/* Change PAL State in case of continuous ranging or continuous histogram */</span><br>    <span class="hljs-keyword">if</span> (Status == VL53L0X_ERROR_NONE &amp;&amp; DeviceMode == VL53L0X_DEVICEMODE_CONTINUOUS_RANGING)<br>        PALDevDataSet(Dev, PalState, VL53L0X_STATE_IDLE);<br><br>    LOG_FUNCTION_END(Status);<br>    <span class="hljs-keyword">return</span> Status;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>官方API中有连续测量模式的宏定义，直接使用即可</p>
+<p>修改完成后，在<code>main()</code>中调用一次该函数启动测量，随后直接使用<code>VL53L0X_GetRangingMeasurementData()</code>函数获取数据即可</p>
+<p>经实际测试，测量速度提高至约75ms一次，大大提升测量效率。</p>
+<h2 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h2><p>有关清除中断函数<code>VL53L0X_ClearInterruptMask()</code>的使用还未完全研究透彻，没有去除，但实际测试中发现读取之后并不需要额外清除中断，中断位功效有待考证</p>
+<h2 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h2><p>本文属于<em><strong>东北大学盘古实验室</strong></em>，未经允许严禁转载，若有错误请指出，不胜感激。</p>
 <p>作者 <em>plumyT@PanGu_NEU</em></p>
 
                 
@@ -386,7 +348,7 @@
       
         <a href="/tags/%E7%A1%AC%E4%BB%B6/" class="print-no-link">#硬件</a>
       
-        <a href="/tags/PCB/" class="print-no-link">#PCB</a>
+        <a href="/tags/%E5%A4%96%E8%AE%BE/" class="print-no-link">#外设</a>
       
     </div>
   
@@ -398,8 +360,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>关于74HC165的使用及一些经验</div>
-      <div>http://coderliuchina.github.io/2025/03/20/2025-3-20/</div>
+      <div>关于VL53L0X多机测量速度较慢的一种解决方法</div>
+      <div>http://coderliuchina.github.io/2025/05/16/2025-5-16/</div>
     </div>
     <div class="license-meta">
       
@@ -411,7 +373,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年3月20日</div>
+          <div>2025年5月16日</div>
         </div>
       
       
@@ -443,18 +405,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/05/16/2025-5-16/" title="关于VL53L0X多机测量速度较慢的一种解决方法">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">关于VL53L0X多机测量速度较慢的一种解决方法</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/11/24/2024-11-24/" title="如何在VSCode配置C/C++环境">
-                        <span class="hidden-mobile">如何在VSCode配置C/C++环境</span>
+                      <a href="/2025/03/20/2025-3-20/" title="关于74HC165的使用及一些经验">
+                        <span class="hidden-mobile">关于74HC165的使用及一些经验</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
